@@ -6,39 +6,29 @@ pipeline {
     }
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: 'https://github.com/HaithaGNair/JenkinProjectNew.git
-'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
-
         stage('Run Tests') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
-
         stage('Package') {
             steps {
-                sh 'mvn package'
+                echo "Build and Test Completed!"
             }
         }
     }
 
     post {
-        success {
-            echo "Pipeline Completed Successfully!"
-        }
         failure {
             echo "Pipeline Failed!"
+        }
+        success {
+            echo "Pipeline Successful!"
         }
     }
 }
